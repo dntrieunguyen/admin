@@ -34,4 +34,12 @@ const HTTP_MESSAGES = {
    [HTTP_CODES.SERVICE_UNAVAILABLE]: 'Lỗi: Dịch vụ hiện không khả dụng.',
 };
 
-export { HTTP_MESSAGES, HTTP_CODES };
+const MESSAGE = {
+   LOGIN: 'Đăng nhập thành công.',
+   LOGOUT: 'Đăng xuất thành công.',
+   REGISTER: 'Đăng ký thành công.',
+   UNAUTHORIZED: 'Tính năng yêu cầu phải đăng nhập.',
+   DO_NOT_HAVE_PERMISSION: 'Không được cấp quyền sử dụng tính năng này',
+};
+
+export { HTTP_MESSAGES, HTTP_CODES, MESSAGE };
