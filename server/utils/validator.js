@@ -19,6 +19,8 @@ let validateRegisterUser = () => {
          min: 6,
       }),
 
+      // avatars
+
       // birthdate
       //   check('birthday', 'Vui lòng điền đầy đủ birthday').notEmpty(),
 
@@ -50,6 +52,10 @@ let validateLoginUser = () => {
          min: 6,
       }),
    ];
+};
+
+let validateChangeAvatar = () => {
+   return [check('avatar').custom(async (value, { req }) => {})];
 };
 
 export { validateRegisterUser, validateLoginUser };

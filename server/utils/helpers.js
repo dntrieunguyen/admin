@@ -47,4 +47,16 @@ const handleValidationErrors = (req, res, next) => {
 };
 // handle validation - END
 
-export { createError, errHandler, notFound, handleValidationErrors };
+const getDateTime = date => {
+   let newDate = `${date.getDate()}/${
+      date.getMonth() + 1
+   }/${date.getFullYear()}`;
+   return newDate;
+};
+export {
+   createError,
+   errHandler,
+   notFound,
+   handleValidationErrors,
+   getDateTime,
+};

@@ -33,6 +33,7 @@ export const UserSchema = new Schema(
          type: Number,
          default: ROLE.USER,
       },
+
       deletedAt: {
          type: Date,
       },
@@ -47,6 +48,21 @@ UserSchema.pre('save', async function (next) {
    if (!user.isModified('password')) {
       return next();
    }
+
+   try {
+      // Sử dụng bcrypt để băm mật khẩu
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(user.password, salt);
+
+      // Gán mật khẩu đã băm vào trường password của người dùng
+      user.password = hashedPassword;
+      return next();
+   } catch (error) {
+      return next(error);
+   }
+});
+UserSchema.pre('findOneAndUpdate', async function (next) {
+   const user = this._update;
 
    try {
       // Sử dụng bcrypt để băm mật khẩu

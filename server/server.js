@@ -8,6 +8,8 @@ const app = express();
 dotenv.config();
 const port = process.env.PORT || 8888;
 
+app.set('trust proxy', 1);
+
 app.use(
    cors({
       origin: process.env.CLIENT_URL,

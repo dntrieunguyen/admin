@@ -5,16 +5,24 @@ import * as auth from '../middlewares/jwt.middleware.js';
 
 const route = express.Router();
 
+route.get(
+   '/',
+   [auth.verifyAccessToken, auth.verifyAdmin],
+   userController.getAllUsers,
+);
+
 route.post(
    '/create-user',
    [auth.verifyAccessToken, auth.verifyAdmin],
    userController.createUser,
 );
 
-route.get(
-   '/',
-   [auth.verifyAccessToken, auth.verifyAdmin],
-   userController.getAllUsers,
+route.post(
+   '/toggle-active',
+   [auth.verifyAccessToken],
+   userController.toggleActiveUser,
 );
+
+route.put('/', [auth.verifyAccessToken], userController.updateUser);
 
 export default route;

@@ -35,11 +35,17 @@ const HTTP_MESSAGES = {
 };
 
 const MESSAGE = {
+   // success
    LOGIN: 'Đăng nhập thành công.',
    LOGOUT: 'Đăng xuất thành công.',
    REGISTER: 'Đăng ký thành công.',
    UNAUTHORIZED: 'Tính năng yêu cầu phải đăng nhập.',
    DO_NOT_HAVE_PERMISSION: 'Không được cấp quyền sử dụng tính năng này',
+   UPLOAD_AVATAR_SUCCESSFULLY: 'Tải file thành công.',
+   CHANGE_AVATAR_SUCCESSFULLY: 'Thay hình ảnh thành công.',
+
+   // failure
+   CAN_NOT_UPLOAD_AVATAR: 'Lỗi! Không thể upload hình ảnh. ',
 };
 
 export { HTTP_MESSAGES, HTTP_CODES, MESSAGE };

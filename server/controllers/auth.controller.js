@@ -1,7 +1,8 @@
 import { generateAccessToken } from '../middlewares/jwt.middleware.js';
 import { User } from '../models/User.js';
-import { handleValidationErrors } from '../utils/helpers.js';
+import { createError, handleValidationErrors } from '../utils/helpers.js';
 import { HTTP_CODES, MESSAGE } from '../utils/messages.js';
+import { v2 as cloudinary } from 'cloudinary';
 
 const logIn = async (req, res, next) => {
    try {
@@ -42,7 +43,7 @@ const logOut = async (req, res, next) => {
 const register = async (req, res, next) => {
    try {
       const data = req?.body;
-      console.log(req.body);
+
       // validate data
       if (handleValidationErrors(req, res)) return;
       const newUser = new User(data);
@@ -56,4 +57,43 @@ const register = async (req, res, next) => {
       next(error);
    }
 };
-export { register, logOut, logIn };
+
+const uploadAvatar = async (req, res, next) => {
+   try {
+      if (!req?.file)
+         return next(
+            createError(HTTP_CODES.BAD_REQUEST, MESSAGE.CAN_NOT_UPLOAD_AVATAR),
+         );
+
+      const img_url = req?.file?.path;
+      return res.status(HTTP_CODES.OK).json({
+         success: true,
+         message: MESSAGE.UPLOAD_AVATAR_SUCCESSFULLY,
+         img_url,
+      });
+   } catch (error) {
+      next(error);
+   }
+};
+
+const changeAvatar = async (req, res, next) => {
+   try {
+      const img_url = req?.file?.path;
+
+      const delAvatar = req.body.del_avatar
+         .match(/admin\/avatars\/[^/]+/)[0]
+         .replace(/\.[^/.]+$/, '');
+
+      cloudinary.uploader.destroy(delAvatar);
+
+      return res.status(HTTP_CODES.OK).json({
+         success: true,
+         message: MESSAGE.CHANGE_AVATAR_SUCCESSFULLY,
+         img_url,
+      });
+   } catch (error) {
+      next(error);
+   }
+};
+
+export { register, logOut, logIn, uploadAvatar, changeAvatar };
