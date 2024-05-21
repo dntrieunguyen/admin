@@ -1,11 +1,13 @@
 import { errHandler, notFound } from '../utils/helpers.js';
 import user from './user.route.js';
 import auth from './auth.route.js';
+import question from './question.route.js';
 
 const initRoutes = app => {
    // declare API endpoint
    app.use('/api/user', user);
    app.use('/api/auth', auth);
+   app.use('/api/question', question);
 
    //    handle Error
    app.use(notFound);

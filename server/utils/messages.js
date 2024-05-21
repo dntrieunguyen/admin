@@ -36,6 +36,7 @@ const HTTP_MESSAGES = {
 
 const MESSAGE = {
    // success
+
    LOGIN: 'Đăng nhập thành công.',
    LOGOUT: 'Đăng xuất thành công.',
    REGISTER: 'Đăng ký thành công.',
