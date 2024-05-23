@@ -24,6 +24,7 @@ const logIn = async (req, res, next) => {
          success: true,
          message: MESSAGE.LOGIN,
          accessToken,
+         results: response,
       });
    } catch (error) {
       next(error);

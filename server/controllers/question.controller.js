@@ -8,7 +8,7 @@ const getAllQuestion = async (req, res, next) => {
       return res.status(HTTP_CODES.OK).json({
          success: true,
          message: HTTP_MESSAGES[HTTP_CODES.OK],
-         result: question,
+         results: question,
       });
    } catch (error) {
       next(error);
@@ -37,7 +37,7 @@ const deleteQuestion = async (req, res, next) => {
       await Question.deleteOne({ _id: id });
       return res.status(HTTP_CODES.OK).json({
          success: true,
-         message: HTTP_MESSAGES[HTTP_CODES.OK],
+         message: 'Đã xoá câu hỏi',
       });
    } catch (error) {
       next(error);

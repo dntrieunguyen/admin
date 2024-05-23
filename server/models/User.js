@@ -36,6 +36,7 @@ export const UserSchema = new Schema(
 
       deletedAt: {
          type: Date,
+         default: null,
       },
    },
    { timestamps: true },

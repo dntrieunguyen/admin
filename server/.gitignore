@@ -3,6 +3,7 @@
 # dependencies
 
 /node_modules
+/admin-template
 /.pnp
 .pnp.js
 

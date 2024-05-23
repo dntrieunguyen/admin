@@ -2,15 +2,23 @@ import { User } from '../models/User.js';
 import { HTTP_CODES, HTTP_MESSAGES, MESSAGE } from '../utils/messages.js';
 import { v2 as cloudinary } from 'cloudinary';
 import { sendMail } from '../utils/sendMail.js';
+import { createError } from '../utils/helpers.js';
 
 // CRUD
 const createUser = async (req, res, next) => {
    try {
       const data = req.body;
+      const newData = new User(data);
+      const existingUser = await User.findOne({ email: data.email });
+      if (existingUser)
+         return next(
+            createError(HTTP_CODES.BAD_REQUEST, 'Email đã được sử dụng'),
+         );
+      await newData.save();
       return res.status(HTTP_CODES.OK).json({
          success: true,
          message: HTTP_MESSAGES[HTTP_CODES.CREATED],
-         data,
+         results: newData,
       });
    } catch (error) {
       next(error);
@@ -108,7 +116,7 @@ const getAllUsers = async (req, res, next) => {
       return res.status(HTTP_CODES.OK).json({
          success: true,
          message: HTTP_MESSAGES.OK,
-         data,
+         results: data,
       });
    } catch (error) {
       next(error);
@@ -119,10 +127,20 @@ const updateUser = async (req, res, next) => {
    try {
       const data = req?.body;
       const { id } = req?.query;
+
+      const currUser = await User.findById(id);
+      // Xoá ảnh cũ trong cloud
+      const delAvatar = currUser.avatar
+         .match(/admin\/avatars\/[^/]+/)[0]
+         .replace(/\.[^/.]+$/, '');
+
+      cloudinary.uploader.destroy(delAvatar);
+
       const updateUser = await User.findByIdAndUpdate(id, data, { new: true });
+
       return res.status(HTTP_CODES.OK).json({
          success: true,
-         message: HTTP_MESSAGES.OK,
+         message: 'User đã được update',
          updateUser,
       });
    } catch (error) {
