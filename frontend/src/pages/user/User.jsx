@@ -35,6 +35,7 @@ const User = () => {
       e.preventDefault();
 
       const data = { id };
+
       try {
          const response = await apiBlockUser(data);
          response.success
@@ -74,7 +75,9 @@ const User = () => {
                            </tr>
                            {user?.map(user => (
                               <tr key={user?._id}>
-                                 <td>{user._id}</td>
+                                 <td style={{ maxWidth: '100px' }}>
+                                    {user._id}
+                                 </td>
                                  <td>{user.fullName}</td>
                                  <td>{user.gender}</td>
                                  <td>{user.email}</td>
@@ -115,7 +118,11 @@ const User = () => {
                                     ) : (
                                        <Link
                                           onClick={e =>
-                                             handleBlock(e, user._id)
+                                             handleBlock(
+                                                e,
+                                                user._id,
+                                                user.deletedAt,
+                                             )
                                           }
                                           to="#"
                                           className="btn btn-danger"

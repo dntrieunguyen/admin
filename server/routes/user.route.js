@@ -13,7 +13,7 @@ route.get(
 
 route.post(
    '/create-user',
-   [auth.verifyAccessToken, auth.verifyAdmin],
+
    userController.createUser,
 );
 

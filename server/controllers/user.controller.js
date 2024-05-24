@@ -130,11 +130,14 @@ const updateUser = async (req, res, next) => {
 
       const currUser = await User.findById(id);
       // Xoá ảnh cũ trong cloud
-      const delAvatar = currUser.avatar
-         .match(/admin\/avatars\/[^/]+/)[0]
-         .replace(/\.[^/.]+$/, '');
 
-      cloudinary.uploader.destroy(delAvatar);
+      if (currUser.avatar.length) {
+         const delAvatar = currUser.avatar
+            .match(/admin\/avatars\/[^/]+/)[0]
+            .replace(/\.[^/.]+$/, '');
+
+         cloudinary.uploader.destroy(delAvatar);
+      }
 
       const updateUser = await User.findByIdAndUpdate(id, data, { new: true });
 

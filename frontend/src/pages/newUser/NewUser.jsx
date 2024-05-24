@@ -26,10 +26,6 @@ const NewUser = () => {
             birthDate: setStringToDate(form.birthDate, 'yyyy-mm-dd', '-'),
          };
 
-         data.avatar = 'link';
-
-         console.log(data);
-
          try {
             const avatar = await apiUploadAvatar(formData);
             data.avatar = avatar?.img_url;
